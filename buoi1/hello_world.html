@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT16313</title>
+</head>
+<body ng-app="hello_world_app">
+    <div ng-controller="hello_controller">
+        <h2>{{ message }}</h2>
+    </div>
+
+    <script src="js/angularjs.min.js"></script>
+    <script>
+        // B1: Tạo 1 UD AngularJs
+        const app = angular.module("hello_world_app", []);
+        // B2: Khai báo phạm vi hoạt động của UD AngularJs: ng-app
+
+        // B3: Tạo 1 function xử lý
+        function sayHello($scope) {
+            $scope.message = "Hello World";
+        }
+
+        // B4: Khai báo function với Angular dưới dạng 1 controller
+        app.controller("hello_controller", sayHello);
+    </script>
+</body>
+</html>
