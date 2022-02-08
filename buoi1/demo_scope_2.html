@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT16313 - Demo $scope 2: Nesting $scope</title>
+</head>
+<body ng-app="demo_scope_2">
+    <!-- Parent -->
+    <div ng-controller="parent_controller">
+        <p>Parent: {{ parent_msg }}</p>
+        <!-- Child 1 -->
+        <div ng-controller="my_controller1" style="height: 300px; background-color: aqua;">
+            <p>Child 1: {{ msg_1 }}</p>
+
+            <!-- C1: Truy xuất trực tiếp thuộc tính của $scope cha, vì vẫn thuộc phạm vi của $scope cha (parent) -->
+            <p>Parent 1: {{ parent_msg }}</p>
+
+            <!-- C2: Sử dụng $parent để truy xuất tới $scope cha -->
+            <p>Parent 2: {{ $parent.parent_msg }}</p>
+        </div>
+
+        <!-- Child 1 -->
+        <div ng-controller="my_controller2" style="height: 300px; background-color: lightgreen;">
+            <p>Child 2: {{ msg_2 }}</p>
+        </div>
+    </div>
+
+    <script src="js/angularjs.min.js"></script>
+    <script>
+        const app = angular.module("demo_scope_2", []);
+
+        function parentController($scope) {
+            $scope.parent_msg = "Đây là message parent";
+        }
+
+        function myController1($scope) {
+            $scope.msg_1 = "Đây là message 1";
+        }
+
+        function myController2($scope, $rootScope) {
+            $scope.msg_2 = "Đây là message 2";
+            $rootScope.root_msg = "Đây là message root";
+        }
+
+        app.controller("parent_controller", parentController);
+        app.controller("my_controller1", myController1);
+        app.controller("my_controller2", myController2);
+    </script>
+</body>
+</html>
