@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT16313 - Demo Directive</title>
+</head>
+<body ng-app="demo_directive">
+    <div ng-controller="my_controller">
+        <ul>
+            <li>Họ Tên: {{ sv.ten }}</li>
+            <li>Điểm: {{ sv.diem }}</li>
+            <li>
+                Giới tính:
+                <span ng-show="sv.gioi_tinh == 1">Nam</span>
+                <span ng-hide="sv.gioi_tinh == 1">Nữ</span>
+            </li>
+            <li>
+                <span ng-show="sv.diem <= 0">Bạn chưa học môn WEB207</span>
+                <span ng-show="sv.diem < 5 && sv.diem > 0">Bạn chưa qua môn WEB207</span>
+                <span ng-show="sv.diem >= 5">Bạn đã qua môn WEB207</span>
+            </li>
+            <li>
+                <span ng-if="sv.diem <= 0">Bạn chưa học môn WEB207</span>
+                <span ng-if="sv.diem < 5 && sv.diem > 0">Bạn chưa qua môn WEB207</span>
+                <span ng-if="sv.diem >= 5">Bạn đã qua môn WEB207</span>
+            </li>
+            <li>
+                Chuyên ngành:
+                <span ng-switch="sv.chuyen_nganh">
+                    <span ng-switch-when="UDPM">Ứng dụng phần mềm</span>
+                    <span ng-switch-when="TKTW">Thiết kế trang web</span>
+                    <span ng-switch-when="LTMT">Lập trình máy tính</span>
+                    <span ng-switch-default>Không hợp lệ</span>
+                </span>
+            </li>
+            <li>
+                Các môn đã pass
+                <ul>
+                    <li ng-repeat="mon_hoc in sv.mon_pass">
+                        {{ $index }} - {{ mon_hoc }}
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!--
+        Bài 3 Lab 4:
+        <tr ng-repeat="sv in students">
+            <td> {{ sv.name }} </td>
+        </tr>
+     -->
+
+    <script src="js/angularjs.min.js"></script>
+    <script>
+        const app = angular.module("demo_directive", []);
+
+        function myController($scope) {
+            $scope.sv = {
+                ten: "Nguyen Van A",
+                gioi_tinh: 1,
+                diem: 0,
+                chuyen_nganh: "UDPM",
+                mon_pass: [
+                    "Nhập môn lập trình",
+                    "Lập trình Java 1",
+                    "Lập trình Java 2",
+                    "Lập trình Java 3",
+                ],
+            };
+        }
+
+        app.controller("my_controller", myController);
+    </script>
+</body>
+</html>
