@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT16313</title>
+</head>
+<body ng-app="demo_filter">
+    <div ng-controller="my_controller">
+        <!-- number & currency -->
+        <!-- Hiển thị 2 số sau dấu phẩy, định dạng số -->
+        <!-- {{ gia_tri | number : so_chu_so_thap_phan }} -->
+        <!-- {{ gia_tri | currency : don_vi : so_chu_so_thap_phan }} -->
+        <p>{{ my_number }}</p>
+        <p>{{ my_number | number : 2 }}</p>
+        <p>{{ my_number | currency : 'VND' : 0 }}</p>
+
+        <!-- date -->
+        <!-- {{ gia_tri | date : format : timezone }} -->
+        <p>{{ now | date : 'dd-MM-yyyy H:m:s' : '+07' }}</p>
+
+        <!-- string -->
+        <p>{{ name | uppercase }}</p>
+        <p>{{ name | lowercase }}</p>
+
+        <!-- json -->
+        <p>{{ js_obj | json }}</p>
+
+
+        <!--
+            limitTo: {{ value | limitTo : limit : start }}
+            value: object/array
+            limitTo: chỉ định bộ lọc
+            limit: số phần tử cần lấy
+            start: vị trí bắt đầu
+        -->
+        <!--
+            Lấy 2 phần tử của mảng, bắt đầu từ vị trị 0
+        -->
+        <ul>
+            <li ng-repeat="item in arr | limitTo : 2 : 0">
+                {{ item.ten }}
+            </li>
+        </ul>
+        <ul>
+            <li ng-repeat="item in arr | limitTo : 2 : 2">
+                {{ item.ten }}
+            </li>
+        </ul>
+
+        <hr>
+
+        <!-- orderBy -->
+        <ul>
+            <li ng-repeat="item in arr | orderBy : 'ma'" >
+                {{ item.ma }} - {{ item.ten }}
+            </li>
+        </ul>
+    </div>
+
+    <script src="js/angularjs.min.js"></script>
+    <script>
+        const app = angular.module("demo_filter", []);
+
+        function myController($scope, $http) {
+            $scope.my_number = 1234.5678;
+            $scope.now = new Date();
+            $scope.name = "Nguyen Van A";
+            $scope.js_obj = {
+                name: "Ng Van A",
+                age: 20,
+            };
+            $scope.arr = [
+                { ma: 'WEB207', ten: "Frontend Framework" },
+                { ma: 'SOF2041', ten: "Du an mau" },
+                { ma: 'MOB1014', ten: "Lap trinh Java 1" },
+                { ma: 'COM108', ten: "Nhap mon lap trinh" },
+                { ma: 'SOF203', ten: "Lap trinh Java 3" },
+                { ma: 'MOB1023', ten: "Lap trinh Java 2" },
+            ];
+
+
+            $http.get("https://620b061fbeee430017f38481.mockapi.io/students")
+                .then(function (response) {
+                    console.log(response);
+                    $scope.dssv = response.data;
+                })
+        }
+
+        app.controller("my_controller", myController);
+    </script>
+</body>
+</html>
